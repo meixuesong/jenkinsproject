@@ -11,7 +11,7 @@ node {
 
     stage('Build') {
         echo "Building....."
-        mvnHome = tool 'jenkins-maven'  //defined in jenkins global tool configuration
+        mvnHome = tool 'apache-maven-3.0.4'  //defined in jenkins global tool configuration
 
         dir("${WORKSPACE}") {   //work in the same directory. workspace is a global env
             if (isUnix()) {
@@ -33,9 +33,10 @@ node {
                 },
 
                 "SonarQube": {
+                    mvnHome = tool 'apache-maven-3.0.4'
                     dir("${WORKSPACE}") {
-                        withSonarQubeEnv('sonarqube-server') {  //defined in Jenkins configure system
-                            sh "'${mvnHome}/bin/mvn' org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar "
+                        withSonarQubeEnv('Consultant02-SonarQube') {  //defined in Jenkins configure system
+                            bat(/"${mvnHome}\bin\mvn" org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar "
                             //+
 //                              '-f pom.xml ' +
 //                              "-Dsonar.projectKey=oocl:${JOB_NAME} " +
@@ -70,7 +71,7 @@ node {
 
     stage('Results') {
         echo "Resulting....."
-        sh "touch target/surefire-reports/*.xml"
+        // bat "touch target/surefire-reports/*.xml"
         junit '**/target/surefire-reports/TEST-*.xml'
         archive 'target/*.jar'
     }
