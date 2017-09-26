@@ -36,7 +36,7 @@ node {
                     mvnHome = tool 'apache-maven-3.0.4'
                     dir("${WORKSPACE}") {
                         withSonarQubeEnv('Consultant02-SonarQube') {  //defined in Jenkins configure system
-                            bat(/"${mvnHome}\bin\mvn" org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar /)
+                            bat(/"${mvnHome}\bin\mvn" --debug org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar /)
                             //+
 //                              '-f pom.xml ' +
 //                              "-Dsonar.projectKey=oocl:${JOB_NAME} " +
